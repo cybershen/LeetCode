@@ -98,3 +98,88 @@ func isPalindrome(_ x: Int) -> Bool {
 let xInt = 12321
 isPalindrome(xInt)
 
+//MARK: - Task 14. Longest Common Prefix
+
+/*
+ 
+ Write a function to find the longest common prefix string amongst an array of strings.
+ If there is no common prefix, return an empty string "".
+
+ --------------------------------------------------------------
+
+
+ Example 1:
+
+ Input: strs = ["flower","flow","flight"]
+ Output: "fl"
+ 
+ --------------------------------------------------------------
+ 
+ Example 2:
+
+ Input: strs = ["dog","racecar","car"]
+ Output: ""
+ 
+ Explanation: There is no common prefix among the input strings.
+ 
+ --------------------------------------------------------------
+
+ */
+
+// Solution 1
+
+func longestCommonPrefix1(_ strs: [String]) -> String {
+    guard strs.count > 0 else { return "" }
+    
+    let minStr = strs.min()!
+    var counter = minStr.count
+    let minStrArr = Array(minStr)
+    
+    for str in strs {
+        if str != minStr {
+            let tempArr = Array(str)
+            var tempCounter = 0
+            for i in 0..<minStrArr.count {
+                if minStrArr[i] == tempArr[i] {
+                    tempCounter += 1
+                } else {
+                    break
+                }
+            }
+            
+            if tempCounter == 0 {
+                return ""
+            }
+            
+            if tempCounter < counter {
+                counter = tempCounter
+            }
+        }
+    }
+    return String(minStr.prefix(counter))
+}
+
+let array = ["flqt", "flqwas", "flqerrr"]
+longestCommonPrefix1(array)
+
+// Solution 2
+
+func longestCommonPrefix2(_ strs: [String]) -> String {
+    guard strs.count > 0 else { return "" }
+    var result = strs[0]
+    
+    for word in strs.dropFirst() {
+        var newPrefix = ""
+        for (el1, el2) in zip(result, word) {
+            if el1 == el2 {
+                newPrefix += String(el1)
+            } else {
+                break
+            }
+        }
+        result = newPrefix
+    }
+    return result
+}
+
+longestCommonPrefix2(array)
