@@ -183,3 +183,77 @@ func longestCommonPrefix2(_ strs: [String]) -> String {
 }
 
 longestCommonPrefix2(array)
+
+//MARK: - Task 20. Valid Parentheses
+
+/*
+ Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+ An input string is valid if:
+
+ Open brackets must be closed by the same type of brackets.
+ 
+ Open brackets must be closed in the correct order.
+ 
+ Every close bracket has a corresponding open bracket of the same type.
+ */
+
+/*
+
+Example 1:
+
+Input: s = "()"
+Output: true
+ 
+Example 2:
+
+Input: s = "()[]{}"
+Output: true
+ 
+Example 3:
+
+Input: s = "(]"
+Output: false
+
+*/
+
+func isValid(_ s: String) -> Bool {
+    var array: [Character] = []
+    
+    var openCurve: Character = "{"
+    var closeCurve: Character = "}"
+    
+    var secondOpenCurve: Character = "("
+    var secondCloseCurve: Character = ")"
+    
+    var quadratirOpenCurve: Character = "["
+    var quadraticCloseCurve: Character = "]"
+    
+    for element in s {
+        if array.last == openCurve,
+           element == closeCurve {
+            array.removeLast()
+        } else if array.last == secondOpenCurve,
+                  element == secondCloseCurve {
+            array.removeLast()
+        } else if array.last == quadratirOpenCurve,
+                  element == quadraticCloseCurve {
+            array.removeLast()
+        } else {
+            if element == openCurve || element == secondOpenCurve || element == quadratirOpenCurve {
+                array.append(element)
+            } else {
+                return false
+            }
+        }
+    }
+    return array.isEmpty
+}
+
+let testSTR = "{{}}"
+let testSTR2 = "{{}"
+let testSTR3 = "(]"
+
+isValid(testSTR)
+isValid(testSTR2)
+isValid(testSTR3)
